@@ -10,8 +10,9 @@ $ python quadtree.py
 ```
 
 Divide the specified rectangle area into four areas recursively until
+
 1. the number of points in every area is smaller than `maxpoints`, or
-2. the depth of the quadtree is equal to `maxdivition`.
+2. the depth of the quadtree is equal to `maxdivition-1`.
 
 ```
 $ cat sample_data
