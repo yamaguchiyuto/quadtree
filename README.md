@@ -1,3 +1,6 @@
+## Quadtree
+https://en.wikipedia.org/wiki/Quadtree
+
 ## Usage
 
 ```
