@@ -4,6 +4,7 @@ class Quadtree:
         self.sequential_id = 0
         self.leaves = {}
         self.root = self.divide(self.init_area(data,x1,y1,x2,y2),maxpoints,maxdivision)
+        self.data = None # no longer needed
 
     def gen_leaves(self):
         for aid in self.leaves:
