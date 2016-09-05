@@ -6,7 +6,7 @@ https://en.wikipedia.org/wiki/Quadtree
 
 ```
 $ python quadtree.py
-[USAGE]: python quadtree.py [x left] [y up] [x right] [y down] [maxpoints] [maxdivision] [data filepath]
+[USAGE]: python quadtree.py [x left] [y up] [x right] [y down] [maxpoints] [maxdivision] [data filepath] (output filepath)
 ```
 
 Divide the specified rectangle area into four areas recursively until
@@ -48,4 +48,10 @@ $ cat sample_data
 0.504955932504 0.610015349003
 0.402852203978 0.382379275531
 0.387591801531 0.452180343665
+```
+
+### Demo
+
+```
+sh demo.sh
 ```
