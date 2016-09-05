@@ -71,8 +71,11 @@ class Quadtree:
             """ Return divided area """
         return area
 
-    def get_area_id(self,p,depth=-1):
+    def get_area_id_with_level(self,p,depth=-1):
         return self.root.covered(p,depth)
+
+    def get_area_ids(self,p):
+        return self.root.covered_all_levels(p)
 
 class Area:
     def __init__(self,aid,x1,y1,x2,y2):
@@ -106,6 +109,21 @@ class Area:
 
     def set_child(self,n,area):
         self.children[n] = area
+
+    def covered_all_levels(self,p):
+        if self.cover(p):
+            if self.fixed:
+                return [self]
+            else:
+                cid = 0
+                if self.x1 + (self.x2 - self.x1) / 2 < p[0]:
+                    cid += 2
+                if self.y1 + (self.y2 - self.y1) / 2 < p[1]:
+                    cid += 1
+                return [self] + self.children[cid].covered_all_levels(p)
+        else:
+            return []
+
 
     def covered(self,p,depth):
         if self.cover(p):
@@ -172,13 +190,23 @@ if __name__ == '__main__':
         print "%s,%s,%s,%s,%s,%s" % (a.aid,level,a.x1,a.y1,a.x2,a.y2)
 
     p = (0.37,0.55)
-    print 
+    print
     print "Query: (%s,%s)" % p
-    area = qtree.get_area_id(p,0)
+
+    print "Query with get_area_id_with_level"
+    area = qtree.get_area_id_with_level(p,0)
     print "Level 0 - Returned Area: %s (%s,%s) - (%s,%s)" % (area.aid, area.x1,area.y1,area.x2,area.y2)
-    area = qtree.get_area_id(p,1)
+    area = qtree.get_area_id_with_level(p,1)
     print "Level 1 - Returned Area: %s (%s,%s) - (%s,%s)" % (area.aid, area.x1,area.y1,area.x2,area.y2)
-    area = qtree.get_area_id(p,2)
+    area = qtree.get_area_id_with_level(p,2)
     print "Level 2 - Returned Area: %s (%s,%s) - (%s,%s)" % (area.aid, area.x1,area.y1,area.x2,area.y2)
-    area = qtree.get_area_id(p,3)
+    area = qtree.get_area_id_with_level(p,3)
     print "Level 3 - Returned Area: %s (%s,%s) - (%s,%s)" % (area.aid, area.x1,area.y1,area.x2,area.y2)
+
+
+    print
+    print "Query with get_area_ids"
+    areas = qtree.get_area_ids(p)
+    for level in range(len(areas)):
+        area = areas[level]
+        print "Level %s - Returned Area: %s (%s,%s) - (%s,%s)" % (level,area.aid, area.x1,area.y1,area.x2,area.y2)
