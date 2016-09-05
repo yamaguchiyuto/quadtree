@@ -3,6 +3,16 @@ https://en.wikipedia.org/wiki/Quadtree
 
 ## Usage
 
+
+```
+$ python quadtree.py
+[USAGE]: python quadtree.py [x left] [y up] [x right] [y down] [maxpoints] [maxdivision] [data filepath]
+```
+
+Divide the specified rectangle area into four areas recursively until
+1. the number of points in every area is smaller than `maxpoints`, or
+2. the depth of the quadtree is equal to `maxdivition`.
+
 ```
 $ cat sample_data
 0.567603099626 0.410160220857
