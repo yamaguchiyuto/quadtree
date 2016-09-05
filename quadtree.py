@@ -64,6 +64,7 @@ class Quadtree:
         else:
             """ Do division if the number of points in this aera exceeds `maxpoints` """
             next_level = self.subdivide(area)
+            area.points_ = []
             """ Divide child areas recursively """
             for i in range(4):
                 child = self.divide(next_level[i],maxpoints,division_left-1)
