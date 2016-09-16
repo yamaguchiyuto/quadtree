@@ -73,7 +73,6 @@ class Quadtree(BaseEstimator,TransformerMixin):
         if division_left == 0 or area.number_of_points() <= self.maxpoints:
             """ Terminate if the number of points in this area does not exceed `maxpoints` """
             self.leaves_[area.aid] = area
-            area.set_isfixed()
             area.set_isleaf()
         else:
             """ Do division if the number of points in this aera exceeds `maxpoints` """
@@ -93,8 +92,7 @@ class Area:
         self.y1 = y1
         self.x2 = x2
         self.y2 = y2
-        self.isfixed_ = False # True if it has no children
-        self.isleaf_ = False
+        self.isleaf = False
         """
         0 2
         1 3
@@ -104,20 +102,14 @@ class Area:
     def set_data(self,X):
         self.data = X
 
-    def number_of_points(self):
-        return self.data.shape[0]
-
-    def is_fixed(self):
-        return self.isfixed_
-
-    def set_isfixed(self):
-        self.isfixed_ = True
+    def set_isleaf(self):
+        self.isleaf = True
 
     def is_leaf(self):
-        return self.isleaf_
+        return self.isleaf
 
-    def set_isleaf(self):
-        self.isleaf_ = True
+    def number_of_points(self):
+        return self.data.shape[0]
 
     def set_child(self,n,area):
         self.children[n] = area
@@ -163,26 +155,10 @@ if __name__ == '__main__':
     y2 = float(sys.argv[4])
     maxpoints = int(sys.argv[5])
     maxdivision = int(sys.argv[6])
-    data = read_data(sys.argv[7])
+    X = read_data(sys.argv[7])
 
     qtree = Quadtree(x1,y1,x2,y2,maxpoints,maxdivision)
 
-    #qtree.fit(data)
-    for aid in qtree.fit_transform(data):
-        print aid
-    exit()
-
-    if len(sys.argv) == 9:
-        import pickle
-        output_filepath = sys.argv[8]
-        with open(output_filepath, 'w') as f:
-            pickle.dump(qtree, f)
-
-    print "AreaID,Depth,x_left,y_up,x_right,y_down"
-    for a in qtree.gen_leaves():
-        print "%s,%s,%s,%s,%s" % (a.aid,a.x1,a.y1,a.x2,a.y2)
-
-    p = np.array([[0.37,0.55],[0.65,0.90]])
-    aids = qtree.transform(p)
-    for aid in aids:
-        print qtree.leaves_[aid]
+    X_trans = qtree.fit_transform(X)
+    print X
+    print X_trans
