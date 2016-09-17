@@ -5,14 +5,28 @@ https://en.wikipedia.org/wiki/Quadtree
 
 
 ```
-$ python quadtree.py
-[USAGE]: python quadtree.py [x left] [y up] [x right] [y down] [maxpoints] [maxdivision] [data filepath] (output filepath)
+$ python main.py -h
+usage: main.py [-h] [-i [INFILE]] [-o [OUTFILE]] [-d [MAXDEPTH]] -p MAXPOINTS
+               -u X Y -l X Y
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i [INFILE], --infile [INFILE]
+                        input file (default=STDIN)
+  -o [OUTFILE], --outfile [OUTFILE]
+                        output file (default=STDOUT)
+  -d [MAXDEPTH], --maxdepth [MAXDEPTH]
+                        the maximum number of quadtree depth (default=10)
+  -p MAXPOINTS, --maxpoints MAXPOINTS
+                        the maximum number of points in each area (required)
+  -u X Y, --upper X Y   upper left point (required)
+  -l X Y, --lower X Y   loewr right point (required)
 ```
 
 Divide the specified rectangle area into four areas recursively until
 
 1. the number of points in every area is smaller than `maxpoints`, or
-2. the depth of the quadtree is equal to `maxdivition-1`.
+2. the depth of the quadtree is equal to `maxdepth`.
 
 ### Sample data
 

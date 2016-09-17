@@ -1,3 +1,4 @@
+import numpy as np
 from sklearn.base import BaseEstimator,TransformerMixin
 
 class Quadtree(BaseEstimator,TransformerMixin):
@@ -128,37 +129,3 @@ class Area:
             return True
         else:
             return False
-
-if __name__ == '__main__':
-    import sys
-    import numpy as np
-
-    def read_data(file_name):
-        data = []
-        for line in open(file_name, 'r'):
-            entries = line.rstrip().split(' ')
-            lat = float(entries[0])
-            lng = float(entries[1])
-            data.append((lat,lng))
-        return np.array(data)
-
-    def usage(com):
-        print "[USAGE]: python %s [x left] [y up] [x right] [y down] [maxpoints] [maxdivision] [data filepath] (output filepath)" % com
-
-    if len(sys.argv) < 8:
-        usage(sys.argv[0])
-        exit()
-
-    x1 = float(sys.argv[1])
-    y1 = float(sys.argv[2])
-    x2 = float(sys.argv[3])
-    y2 = float(sys.argv[4])
-    maxpoints = int(sys.argv[5])
-    maxdivision = int(sys.argv[6])
-    X = read_data(sys.argv[7])
-
-    qtree = Quadtree(x1,y1,x2,y2,maxpoints,maxdivision)
-
-    X_trans = qtree.fit_transform(X)
-    print X
-    print X_trans
