@@ -26,5 +26,7 @@ X = read_data(args.infile)
 qtree = Quadtree(args.upper[0],args.upper[1],args.lower[0],args.lower[1],args.maxpoints,args.maxdepth)
 
 X_trans = qtree.fit_transform(X)
+print '"area ID","upper left x","upper left y","lower right x","lower right y"'
 for i in range(len(X_trans)):
-    print >>args.outfile, X_trans[i]
+    a = qtree.leaves_[X_trans[i]]
+    print >>args.outfile, "%s,%s,%s,%s,%s" % (a.aid,a.x1,a.y1,a.x2,a.y2)
